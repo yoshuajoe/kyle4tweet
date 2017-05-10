@@ -1,0 +1,72 @@
+{
+   "consumer_key":"kQIEGng81HyAD88IruqNWBKla",
+
+   "consumer_secret":"lleHy3ZA4OFDJgGHEP2Gjq7s9Ghi3AiKGmyRKAqFFbaNNQUGRS",
+
+   "access_token":"73776288-dxNkeEgQYmLJr0P1uklhjMjIyyGY9SwYPqgqb0pN1",
+
+   "access_token_secret":"pi0BqueRrOKRU1mMbEbE8Z1GQwqRceNnbxEkR6SAdpW4o",
+
+   "base_dir_data_win":"C:\\xampp\\htdocs\\kyle_result\\data\\",
+   
+   "base_dir_data":"/Users/yoshuachristomoputro/Sites/snowflakes/data/",
+   
+   "timezone":7,
+   
+   "stopword_file":"/Users/yoshuachristomoputro/Downloads/kyle4tweet-master/data/twitter_stp.dic",
+   
+   "stopword_file_win":"C:\\Users\\yoshua.putro\\Desktop\\kyle-tweets-master\\data\\twitter_stp.dic",
+
+   "dump_file":"/Users/yoshuachristomoputro/Downloads/kyle4tweet-master/dump_file/",
+   
+   "dump_file_win":"C:\\Users\\yoshua.putro\\Desktop\\kyle-tweets-master\\dump_file\\",
+
+   "google_map_key":"AIzaSyAlVCeVWE5IvA_8fcxeIBpY64VU_Yva5hc",
+
+   "language_description":{
+      "ar":"Arabic",
+      "bg":"Bulgarian",
+      "ca":"Catalan",
+      "cs":"Czech",
+      "da":"Danish",
+      "de":"German",
+      "el":"Greek",
+      "en":"English",
+      "es":"Spanish",
+      "et":"Estonian",
+      "fa":"Persian",
+      "fi":"Finnish",
+      "fr":"French",
+      "hi":"Hindi",
+      "hr":"Croatian",
+      "hu":"Hungarian",
+      "id":"Indonesian",
+      "is":"Icelandic",
+      "it":"Italian",
+      "iw":"Hebrew",
+      "ja":"Japanese",
+      "ko":"Korean",
+      "lt":"Lithuanian",
+      "lv":"Latvian",
+      "ms":"Malay",
+      "nl":"Dutch",
+      "no":"Norwegian",
+      "pl":"Polish",
+      "pt":"Portuguese",
+      "ro":"Romanian",
+      "ru":"Russian",
+      "sk":"Slovak",
+      "sl":"Slovenian",
+      "sr":"Serbian",
+      "sv":"Swedish",
+      "th":"Thai",
+      "tl":"Filipino",
+      "tr":"Turkish",
+      "uk":"Ukrainian",
+      "und":"uni dominica",
+      "ur":"Urdu",
+      "vi":"Vietnamese",
+      "zh_CN":"Chinese (simplified)",
+      "zh_TW":"Chinese (traditional)"
+   }
+}

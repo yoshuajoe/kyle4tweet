@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Kyle4Twitter</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<script src="https://www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="http://bl.ocks.org/ericcoopey/raw/6382449/c61e6febb945ca6833089c1d39a5a40bb14d2734/d3.layout.cloud.js"></script>
+	<script src="https://www.amcharts.com/lib/3/pie.js"></script>
+	
+	<style>
+	.chartdiv {
+		width		: 100%;
+		height		: 500px;
+		font-size	: 11px;
+	}
+
+	.map {
+        height: 100%;
+      }	
+	  
+	  .map-info {
+    padding: 3px 10px;
+    font-size: 12px;
+}
+	</style>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">Kyle4Twitter Dashboard</a>
+            </div>
+            <!-- /.navbar-header -->
+
+          
+            <!-- /.navbar-top-links -->
+
+            
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header" id="topic">Dashboard</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-comments fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" id="total">0</div>
+                                    <div>Tweets</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-tasks fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" id="bots">0</div>
+                                    <div>Bots</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" id="unparsed">0</div>
+                                    <div>Unparsed Tweets</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--<div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-support fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">13</div>
+                                    <div>Support Tickets!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>-->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-8">
+				<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Tweets per Day
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Action</a>
+                                        </li>
+                                        <li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+							<div class="chartdiv" id="chartdiv_date_d"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Tweets per Hour
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Action</a>
+                                        </li>
+                                        <li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+							<div class="chartdiv" id="chartdiv_date_m"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Influencer
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Action</a>
+                                        </li>
+                                        <li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+							<div class="chartdiv" id="chartdiv_user"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+					
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Word Cloud
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Action</a>
+                                        </li>
+                                        <li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+							<div id="chart_termf"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong><i>@</i></strong> Mention
+                            
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+							<div id="chartdiv_mention" class="chartdiv"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong><i>#</i></strong> Hashtag
+                            <div class="pull-right">
+                               
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+							<div id="chartdiv_hashtag" class="chartdiv"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong><i>CS</i></strong> Language
+                            <div class="pull-right">
+                               
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div id="chartdiv_lang" class="chartdiv"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong><i>CS</i></strong> Custom
+                            <div class="pull-right">
+                               
+                            </div>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+							<div id="chartdiv_custom" class="chartdiv"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    
+                    
+                </div>
+                <!-- /.col-lg-8 -->
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Term Frequency
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                           <div class="col-lg-4">
+                                    <div class="table">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Term</th>
+                                                    <th>Size</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbl_wc">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Splitted Dataset
+                        </div>
+                        <div class="panel-body">
+                            <div id="chartdiv_split_dataset" class="chartdiv"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <div class="chat-panel panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-comments fa-fw"></i> Maps
+                          
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="map" id="geomap"></div>
+							
+							
+                        </div>
+                        <!-- /.panel-body -->
+                        <div class="panel-footer">
+                           <div class="map-info">
+                                <span>
+                                    <img src="http://localhost:8080/snowflakes/img/marker/blue/m1.png" alt="Cluster Marker (Blue)" width="20" height="20"> Cluster (Blue)
+                                    &nbsp;
+                                    <img src="http://localhost:8080/snowflakes/img/marker/blue/map.png" alt="Marker (Blue)" width="12" height="16"> Blue
+                                </span>
+                                
+                            </div>
+                        </div>
+                        <!-- /.panel-footer -->
+                    </div>
+                    <!-- /.panel .chat-panel -->
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+	<script>
+
+	AmCharts.makeChart("chartdiv_date_m", {
+		"type": "serial",
+		"theme": "light",
+		"marginRight": 80,
+		"dataLoader": {
+			"url": "http://localhost:8080/snowflakes/data/date_m.json"    
+		  },
+		"valueAxes": [{
+			"position": "left",
+			"title": "Tweets Per Hour"
+		}],
+		"graphs": [{
+			"id": "g1",
+			"fillAlphas": 0.4,
+			"valueField": "value",
+			 "balloonText": "<div style='margin:5px; font-size:19px;'>Tweets:<b>[[value]]</b></div>"
+		}],
+		"chartScrollbar": {
+			"graph": "g1",
+			"scrollbarHeight": 80,
+			"backgroundAlpha": 0,
+			"selectedBackgroundAlpha": 0.1,
+			"selectedBackgroundColor": "#888888",
+			"graphFillAlpha": 0,
+			"graphLineAlpha": 0.5,
+			"selectedGraphFillAlpha": 0,
+			"selectedGraphLineAlpha": 1,
+			"autoGridCount": true,
+			"color": "#AAAAAA"
+		},
+		"chartCursor": {
+			"categoryBalloonDateFormat": "JJ:NN, DD MMMM",
+			"cursorPosition": "mouse"
+		},
+		"categoryField": "date",
+		"categoryAxis": {
+			"minPeriod": "mm",
+			"parseDates": true
+		},
+		"export": {
+			"enabled": true,
+			 "dateFormat": "YYYY-MM-DD HH:NN:SS"
+		}
+	});
+
+	</script>
+	<script>
+
+	AmCharts.makeChart("chartdiv_date_d", {
+		"type": "serial",
+		"theme": "light",
+		"marginRight": 80,
+		"dataLoader": {
+			"url": "http://localhost:8080/snowflakes/data/date_d.json"    
+		  },
+		"valueAxes": [{
+			"position": "left",
+			"title": "Tweets Per Hour"
+		}],
+		"graphs": [{
+			"id": "g1",
+			"fillAlphas": 0.4,
+			"valueField": "value",
+			 "balloonText": "<div style='margin:5px; font-size:19px;'>Tweets:<b>[[value]]</b></div>"
+		}],
+		"chartScrollbar": {
+			"graph": "g1",
+			"scrollbarHeight": 80,
+			"backgroundAlpha": 0,
+			"selectedBackgroundAlpha": 0.1,
+			"selectedBackgroundColor": "#888888",
+			"graphFillAlpha": 0,
+			"graphLineAlpha": 0.5,
+			"selectedGraphFillAlpha": 0,
+			"selectedGraphLineAlpha": 1,
+			"autoGridCount": true,
+			"color": "#AAAAAA"
+		},
+		"chartCursor": {
+			"categoryBalloonDateFormat": "JJ:NN, DD MMMM",
+			"cursorPosition": "mouse"
+		},
+		"categoryField": "date",
+		"categoryAxis": {
+			"minPeriod": "mm",
+			"parseDates": true
+		},
+		"export": {
+			"enabled": true,
+			 "dateFormat": "YYYY-MM-DD HH:NN:SS"
+		}
+	});
+
+	</script>
+	<script>
+		var chart = AmCharts.makeChart("chartdiv_user", {
+		  "type": "serial",
+		  "dataLoader": {
+			"url": "http://localhost:8080/snowflakes/data/users.json"
+		  },
+		  "valueAxes": [{
+			"gridColor": "#FFFFFF",
+			"gridAlpha": 0.2,
+			"dashLength": 0
+		  }],
+		  "gridAboveGraphs": true,
+		  "startDuration": 1,
+		  "graphs": [{
+			"balloonText": "[[category]]: <b>[[value]]</b>",
+			"fillAlphas": 0.8,
+			"lineAlpha": 0.2,
+			"type": "column",
+			"valueField": "visits"
+		  }],
+		  "chartCursor": {
+			"categoryBalloonEnabled": false,
+			"cursorAlpha": 0,
+			"zoomable": false
+		  },
+		  "categoryField": "country",
+		  "categoryAxis": {
+			"labelRotation": 45,
+			"gridPosition": "start",
+			"gridAlpha": 0,
+			"tickPosition": "start",
+			"tickLength": 20
+		  }
+		});
+
+	</script>
+		<script>
+		var chart = AmCharts.makeChart("chartdiv_hashtag", {
+		  "type": "serial",
+		  "dataLoader": {
+			"url": "http://localhost:8080/snowflakes/data/hashtag.json"
+		  },
+		  "valueAxes": [{
+			"gridColor": "#FFFFFF",
+			"gridAlpha": 0.2,
+			"dashLength": 0
+		  }],
+		  "gridAboveGraphs": true,
+		  "startDuration": 1,
+		  "graphs": [{
+			"balloonText": "[[category]]: <b>[[value]]</b>",
+			"fillAlphas": 0.8,
+			"lineAlpha": 0.2,
+			"type": "column",
+			"valueField": "size"
+		  }],
+		  "chartCursor": {
+			"categoryBalloonEnabled": false,
+			"cursorAlpha": 0,
+			"zoomable": false
+		  },
+		  "categoryField": "text",
+		  "categoryAxis": {
+			"labelRotation": 45,
+			"gridPosition": "start",
+			"gridAlpha": 0,
+			"tickPosition": "start",
+			"tickLength": 20
+		  }
+		});
+
+	</script>
+    <script>
+       var chart = AmCharts.makeChart("chartdiv_lang", {
+          "type": "serial",
+          "dataLoader": {
+            "url": "http://localhost:8080/snowflakes/data/lang.json"
+          },
+          "valueAxes": [{
+            "gridColor": "#FFFFFF",
+            "gridAlpha": 0.2,
+            "dashLength": 0
+          }],
+          "gridAboveGraphs": true,
+          "startDuration": 1,
+          "graphs": [{
+            "balloonText": "[[category]]: <b>[[value]]</b>",
+            "fillAlphas": 0.8,
+            "lineAlpha": 0.2,
+            "type": "column",
+            "valueField": "visits"
+          }],
+          "chartCursor": {
+            "categoryBalloonEnabled": false,
+            "cursorAlpha": 0,
+            "zoomable": false
+          },
+          "categoryField": "country",
+          "categoryAxis": {
+            "labelRotation": 45,
+            "gridPosition": "start",
+            "gridAlpha": 0,
+            "tickPosition": "start",
+            "tickLength": 20
+          }
+        });
+
+    </script>
+	<script>
+		var chart = AmCharts.makeChart("chartdiv_mention", {
+		  "type": "serial",
+		  "dataLoader": {
+			"url": "http://localhost:8080/snowflakes/data/mention.json"
+		  },
+		  "valueAxes": [{
+			"gridColor": "#FFFFFF",
+			"gridAlpha": 0.2,
+			"dashLength": 0
+		  }],
+		  "gridAboveGraphs": true,
+		  "startDuration": 1,
+		  "graphs": [{
+			"balloonText": "[[category]]: <b>[[value]]</b>",
+			"fillAlphas": 0.8,
+			"lineAlpha": 0.2,
+			"type": "column",
+			"valueField": "size"
+		  }],
+		  "chartCursor": {
+			"categoryBalloonEnabled": false,
+			"cursorAlpha": 0,
+			"zoomable": false
+		  },
+		  "categoryField": "text",
+		  "categoryAxis": {
+			"labelRotation": 45,
+			"gridPosition": "start",
+			"gridAlpha": 0,
+			"tickPosition": "start",
+			"tickLength": 20
+		  }
+		});
+
+	</script>
+	<script>
+		var chart = AmCharts.makeChart("chartdiv_custom", {
+		  "type": "serial",
+		  "dataLoader": {
+			"url": "http://localhost:8080/snowflakes/data/custom.json"
+		  },
+		  "valueAxes": [{
+			"gridColor": "#FFFFFF",
+			"gridAlpha": 0.2,
+			"dashLength": 0
+		  }],
+		  "gridAboveGraphs": true,
+		  "startDuration": 1,
+		  "graphs": [{
+			"balloonText": "[[category]]: <b>[[value]]</b>",
+			"fillAlphas": 0.8,
+			"lineAlpha": 0.2,
+			"type": "column",
+			"valueField": "size"
+		  }],
+		  "chartCursor": {
+			"categoryBalloonEnabled": false,
+			"cursorAlpha": 0,
+			"zoomable": false
+		  },
+		  "categoryField": "text",
+		  "categoryAxis": {
+			"labelRotation": 45,
+			"gridPosition": "start",
+			"gridAlpha": 0,
+			"tickPosition": "start",
+			"tickLength": 20
+		  }
+		});
+
+	</script>
+	<script>
+		var chart = AmCharts.makeChart("chartdiv_split_dataset", {
+		  "type": "pie",
+		  "dataLoader": {
+					"url": "http://localhost:8080/snowflakes/data/split_dataset_pie.json"
+				  },
+		  "valueField": "size",
+		  "titleField": "text",
+		  "colorField": "color"
+		});
+		
+	</script>
+	<script>
+
+    $.getJSON("http://localhost:8080/snowflakes/data/term_freq.json", function(result){
+		var frequency_list = result;
+		console.log(frequency_list);
+		var color = d3.scale.linear()
+				.domain([0,1,2,3,4,5,6,10,15,20,100])
+				.range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
+
+		d3.layout.cloud().size([1024, 500])
+				.words(frequency_list)
+				.rotate(0)
+				.fontSize(function(d) 
+				{ 
+					var divider = 10;
+					
+					if(d.size > 100)
+						divider = 100;
+					
+					if(d < 20)
+					{
+						return d.size;
+					}else
+					{
+						return 30 + (d.size/divider)
+					}
+				})
+				.on("end", draw)
+				.start();
+
+		function draw(words) {
+			d3.select("#chart_termf").append("svg")
+					.attr("width", 900)
+					.attr("height", 600)
+					.attr("class", "wordcloud")
+					.append("g")
+					// without the transform, words words would get cutoff to the left and top, they would
+					// appear outside of the SVG area
+					.attr("transform", "translate(320,200)")
+					.selectAll("text")
+					.data(words)
+					.enter().append("text")
+					.style("font-size", function(d) { return d.size + "px"; })
+					.style("fill", function(d, i) { return color(i); })
+					.attr("transform", function(d) {
+						return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+					})
+					.text(function(d) { return d.text; });
+		}
+		
+		var tbl = $("#tbl_wc");
+		
+		for(var i = 0; i< result.length; i++)
+		{
+			tbl.append("<tr><td>"+(i+1)+"</td><td>"+result[i].text+"</td><td>"+result[i].size+"</td></tr>");
+		}
+    });
+	
+	
+	</script>
+	<script>
+
+		$.getJSON("http://localhost:8080/snowflakes/data/param.json", function(result){
+			var topic = $("#topic");
+			var total = $("#total");
+			var bots = $("#bots");
+			var unparsed = $("#unparsed");
+			
+			topic.text(result.topic);
+			total.text(result.total);
+			bots.text(result.bots);
+			unparsed.text(result.unparsed_tweets);
+		});
+		
+		
+	</script>
+	
+	 <script>
+	function initMap() {
+	 $.getJSON("http://localhost:8080/snowflakes/data/geo.json", function(locations){
+     
+
+        var map = new google.maps.Map(document.getElementById('geomap'), {
+         zoom: 5,
+         center: {
+				lat: -.789275,
+				lng: 117.25781
+			},
+		
+		styles: [{
+			featureType: "administrative",
+			elementType: "labels.text.fill",
+			stylers: [{
+				color: "#444444"
+			}]
+		}, {
+			featureType: "landscape",
+			elementType: "all",
+			stylers: [{
+				color: "#f2f2f2"
+			}]
+		}, {
+			featureType: "poi",
+			elementType: "all",
+			stylers: [{
+				visibility: "off"
+			}]
+		}, {
+			featureType: "road",
+			elementType: "all",
+			stylers: [{
+				saturation: -100
+			}, {
+				lightness: 45
+			}]
+		}, {
+			featureType: "road.highway",
+			elementType: "all",
+			stylers: [{
+				visibility: "simplified"
+			}]
+		}, {
+			featureType: "road.arterial",
+			elementType: "labels.icon",
+			stylers: [{
+				visibility: "off"
+			}]
+		}, {
+			featureType: "transit",
+			elementType: "all",
+			stylers: [{
+				visibility: "off"
+			}]
+		}, {
+			featureType: "water",
+			elementType: "all",
+			stylers: [{
+				color: "#91d5e4"
+			}, {
+				visibility: "on"
+			}]
+		}]
+        });
+
+        // Create an array of alphabetical characters used to label the markers.
+        
+		// var availableColor = ["http://localhost:8080/snowflakes/img/marker/blue/map.png", "http://localhost:8080/snowflakes/img/marker/blue/red.png", "http://localhost:8080/snowflakes/img/marker/yellow/map.png", "http://localhost:8080/snowflakes/img/marker/purple/map.png"];
+		
+        // Add some markers to the map.
+        // Note: The code uses the JavaScript Array.prototype.map() method to
+        // create an array of markers based on a given "locations" array.
+        // The map() method here has nothing to do with the Google Maps API.
+		
+		
+		markers = {snow:locations.snow.map(function(a, e) {
+							var t = new google.maps.Marker({
+									position: a.loc,
+									icon: "http://localhost:8080/snowflakes/img/marker/blue/map.png",
+									title: a.label
+								}),
+								i = new google.maps.InfoWindow({
+									content: a.label,
+									maxWidth: 280
+								});
+							return t.addListener("click", function() {
+								i.open(map, t)
+							}), t
+						})
+					};
+		
+			// Add a marker clusterer to manage the markers.
+			new MarkerClusterer(map, markers.snow, {
+				imagePath: "http://localhost:8080/snowflakes/img/marker/blue/m"
+			});
+
+	  });
+	  }
+	  
+
+		</script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlVCeVWE5IvA_8fcxeIBpY64VU_Yva5hc&callback=initMap">
+    </script>
+</body>
+
+</html>
